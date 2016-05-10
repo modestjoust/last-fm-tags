@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>TITLE</title>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js">
+		</script>
+		<script type="text/javascript" src="d3/d3.js"></script>
+		<script type="text/javascript" src="lastfm.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.2.min.js"
+						integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="
+						crossorigin="anonymous"></script>
+		<style>
+			body {background-color:lightgrey}
+		</style>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+			var w = 1000;		// width of svg window
+			var h = 600;		// height of svg window
+			var barsPadding = 2;	// used when drawing bars to separate them
+			var initBars = [0,0,0,0,0,0,0,0,0,0];	// used to draw bars initially with lengths of 0
+
+			var randCircles = [];
+
+			//
+			//	Collects array of circle objects
+			//
+			for ( var i = 0; i < 100; i++ ) {
+				var randCircle = { xCoord:Math.random() , yCoord:Math.random() , radius:Math.random() }
+				randCircles.push(randCircle);
+			}
+
+			//
+			// intializes svg window
+			//
+			var svg = d3.select("body").append("svg").attr("width", w).attr("height", h)
+									.attr("style", "float:left; margin-right:10px; background-color:black"); //#ACAEB5
+
+			//
+			//	Draws random circles of no importance... yet
+			//
+			var circles = svg.selectAll("circle")
+									.data(randCircles)
+									.enter()
+									.append("circle")
+									.attr("cx", function(d) {
+										return w * d.xCoord;
+									})
+									.attr("cy", function(d) {
+										return h * d.yCoord;
+									})
+									.attr("r", function(d) {
+										return (70 * d.radius + 10);
+									})
+									.attr("fill", "yellow")
+									.attr("opacity", .2)
+									.attr("stroke-width", function(d) {
+										return (d.radius * 40);
+									})
+									.attr("stroke-dasharray", "1, 1, 1, 1")
+									.attr("stroke", function(d) {
+										return "#FFD900";
+									});
+		</script>
+		<br><br>
+		<div id="artistForm">
+		<form>
+		<b><div style="font-family:'Courier New', Serif;">Artist:</b></div>
+		<input id="artistName" type="text" value="radiohead">
+		</form><br>
+		<button id="getData">Get Data</button><br><br>
+		</div>
+		<button id="clear" onclick="clearScreen()">Clear</button>
+		<div id="testDiv" style="opacity:0">words</div>
+	</body>
+</html>
